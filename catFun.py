@@ -2,6 +2,7 @@ import runWorld as rw
 import drawWorld as dw
 import pygame as pg
 from random import randint
+from numpy import absolute
 
 ################################################################
 
@@ -16,7 +17,7 @@ from random import randint
 #
 # For example, the tuple (7,1) would represent the cat at x-coord,
 # 7, and moving to the right by 1 pixel per "clock tick."
-# 
+#
 # The initial state of the cat in this program is (0,1), meaning that the cat
 # starts at the left of the screen and moves right one pixel per tick.
 #
@@ -31,7 +32,7 @@ from random import randint
 ################################################################
 
 # Initialize world
-name = "Cav Man. Press the mouse (but not too fast)!"
+name = "Hoo will win? Press the mouse (but not too fast)!"
 width = 1000
 height = 1000
 rw.newDisplay(width, height, name)
@@ -48,7 +49,7 @@ myimage1 = dw.loadImage("hokie.gif")
 def updateDisplay(state):
     dw.fill(dw.black)
     dw.draw(myimage, (state[0], state[2]))
-
+    dw.draw(myimage1, (state[4], state[6]))
 
 ################################################################
 
@@ -59,7 +60,7 @@ def updateDisplay(state):
 #
 # state -> state
 def updateState(state):
-    return((state[0] + state[1], state[1], state[2] + state[3], state[3]))
+    return((state[0] + state[1], state[1], state[2] + state[3], state[3], state[4] + state[5], state[5], state[5] + state[6]))
 
 ################################################################
 
@@ -67,7 +68,9 @@ def updateState(state):
 # that is, when pos is less then zero or greater than the screen width
 # state -> bool
 def endState(state):
-    if (state[0] > width or state[0] < 0 or state[2] > height or state[2] < 0):
+
+    if( absolute(state[0] - state[4]) <  150 + 93 and
+       absolute(state[2] - state[6]) <  150 + 115):
         return True
     else:
         return False
@@ -86,10 +89,10 @@ def endState(state):
 #
 # state -> event -> state
 #
-def handleEvent(state, event):  
+def handleEvent(state, event):
 #    print("Handling event: " + str(event))
     if (event.type == pg.MOUSEBUTTONDOWN):
-        return((state[0], randint(-5, 5), state[2], randint(-5, 5)))
+        return((state[0], randint(-5, 5), state[2], randint(-5, 5), state[4], randint(-5, 5), state[6], randint(-5, 5)))
     else:
         return(state)
 
@@ -97,8 +100,9 @@ def handleEvent(state, event):
 
 # World state will be single x coordinate at left edge of world
 
-# The cat starts at the left, moving right 
-initState = (randint(0, 499), randint(1, 5), randint(0, 499), randint(1, 5))
+# The cat starts at the left, moving right
+initState = (randint(0, 499), randint(1, 5), 100, randint(1, 5), 500, randint (1, 5), height/2, randint(1, 5))
+
 
 
 # Run the simulation no faster than 60 frames per second
