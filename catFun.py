@@ -13,13 +13,13 @@ from numpy import absolute
 ################################################################
 
 # Initialize world
-name = "Hoo will win? Press the mouse (but not too fast)!"
+name = "Hoo will win? Conquer the Hokie !! (Press the mouse)"
 width = 1000
 height = 1000
 
 pygame.init()
 
-pygame.display.set_caption('font example')
+pygame.display.set_caption('YOU WIN - GO HOOS')
 size = [640, 480]
 screen = pygame.display.set_mode(size)
 
@@ -27,7 +27,7 @@ clock = pygame.time.Clock()
 
 basicfont = pygame.font.SysFont(None, 48)
 #text
-text = basicfont.render('Hello World!', True, (255, 0, 0), (255, 255, 255))
+text = basicfont.render('YOU WIN - GO HOOS', True, (255, 0, 0), (255, 255, 255))
 textrect = text.get_rect()
 textrect.centerx = screen.get_rect().centerx
 textrect.centery = screen.get_rect().centery
